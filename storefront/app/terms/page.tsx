@@ -1,19 +1,14 @@
-'use client'
-
-import { usePolicies } from '@/hooks/use-policies'
-import { Loader2 } from 'lucide-react'
+import type { Metadata } from 'next'
+import { getPolicies } from '@/lib/get-policies'
 import { PolicyMarkdown } from '@/components/policy-markdown'
 
-export default function TermsPage() {
-  const { policies, isLoading } = usePolicies()
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: 'Read our terms of service, including online store terms, pricing, and general conditions.',
+}
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-      </div>
-    )
-  }
+export default async function TermsPage() {
+  const policies = await getPolicies()
 
   const policy = policies?.terms_of_service
   const storeName = policies?.store_name || 'Store'
@@ -59,7 +54,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-h4 font-heading font-semibold text-foreground mb-3">Products & Pricing</h2>
+              <h2 className="text-h4 font-heading font-semibold text-foreground mb-3">Products &amp; Pricing</h2>
               <p>Certain products may be available exclusively online through the website. These products may have limited quantities and are subject to return only according to our Return Policy. We reserve the right to limit the quantities of any products that we offer. All descriptions of products or product pricing are subject to change at any time without notice.</p>
             </section>
 
